@@ -50,7 +50,11 @@ async def lifespan(app):
     yield
 
 
-app = FastAPI(title="Cloud AI Network Monitor", version="1.0.0", lifespan=lifespan)
+app = FastAPI(
+    title="FlowLens — Explainable Network Threat Detection",
+    version="1.0.0",
+    lifespan=lifespan,
+)
 
 
 class PredictionRequest(BaseModel):

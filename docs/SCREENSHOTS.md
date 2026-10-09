@@ -1,4 +1,6 @@
-# Dashboard walkthrough
+# FlowLens dashboard walkthrough
+
+The screenshots below were captured before the FlowLens rename and retain the previous sidebar branding; the application now displays FlowLens.
 
 These are screenshots of the running local application, using actual held-out sample predictions and the measured dataset audit. They are not generated mockups. Desktop readability was checked at 1440 × 1000; the narrow browser panel was also checked for horizontal overflow, then the viewport override was reset.
 

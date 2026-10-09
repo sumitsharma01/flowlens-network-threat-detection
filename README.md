@@ -1,6 +1,12 @@
-# Cloud AI Network Monitor
+# FlowLens — Explainable Network Threat Detection
 
-A working supervised network intrusion classifier trained on UNSW-NB15, with a local dashboard for scoring CSV flow features, reviewing flagged traffic, and inspecting held-out model performance.
+**FlowLens helps you understand suspicious network traffic, from a model prediction to the features behind it.** It is a supervised machine-learning project for classifying network-flow records as normal or attack, reviewing flagged flows, and evaluating how reliably the detector works on unseen data.
+
+It uses **CatBoost trained on UNSW-NB15** to analyze 42 numerical and categorical flow features. A threshold selected on a separate calibration split turns attack scores into review flags. Native **TreeSHAP** explains which features raised or lowered each prediction, while a separate experimental model suggests an attack category. A **FastAPI backend**, browser dashboard, and SQLite review history make predictions accessible through CSV uploads, sample replay, JSON requests, and exported results.
+
+Use FlowLens to explore intrusion classification, reproduce model evaluation, learn from the commented Jupyter training notebook, or score compatible flow-feature datasets. Start the app locally, replay the included sample or upload a CSV, filter flagged flows, and select **Explain** to inspect a decision. The supplied trained models let you try the application without retraining.
+
+FlowLens currently processes prepared flow records. Live packet capture and cloud deployment are future extensions. Its measured test false-positive rate is 17.27%, so flags require review and the model needs validation on your network before operational use.
 
 ## Explainability, data quality, and screenshots
 
@@ -28,16 +34,32 @@ The separate category classifier has **47.28% macro-F1** and struggles with seve
 This is flow-feature classification. It does not capture live packets or establish zero-day detection quality.
 
 ## Run locally
-Python 3.13 is the verified runtime. From this repository directory:
+Python 3.13 is the verified runtime. Clone the repository and start the app:
 
 ```bash
+git clone https://github.com/sumitsharma01/flowlens-network-threat-detection.git
+cd flowlens-network-threat-detection
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn backend.app:app --host 127.0.0.1 --port 8000
 ```
 
-Open http://127.0.0.1:8000 and select **Replay sample**, or upload `data/sample/flows.csv`. Open http://127.0.0.1:8000/docs for the API.
+Open [the dashboard](http://127.0.0.1:8000) and follow this workflow:
+
+1. Select **Replay sample** to score 300 real held-out flows, or **Upload CSV** with `data/sample/flows.csv` or compatible unseen records.
+2. Open **Network flows** or **Flagged flows** to review attack scores and experimental category suggestions.
+3. Select **Explain** beside a record to see the features contributing to its score.
+4. Review **Model performance** and **Dataset quality** to understand evaluation results and data limitations.
+5. Export a batch to CSV for further analysis. Previous batches remain in the local review database.
+
+Developers can use [Swagger API documentation](http://127.0.0.1:8000/docs) for JSON predictions, CSV uploads, and explanations. For example:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/upload -F "file=@data/sample/flows.csv"
+```
+
+For larger files or scripted workflows, use the prediction CLI shown below.
 
 The delivered project bundle includes trained `.cbm` model files, sample data, and evaluation reports. The repository includes the trained native model files. Retraining is optional; to rebuild the application bundle:
 
