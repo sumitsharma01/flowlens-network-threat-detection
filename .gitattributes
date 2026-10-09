@@ -1,0 +1,6 @@
+*.cbm binary
+*.png binary
+*.jpg binary
+*.ipynb text eol=lf
+
+notebooks/*.html linguist-generated=true

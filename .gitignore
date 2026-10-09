@@ -222,3 +222,9 @@ dist/
 build/
 .DS_Store
 
+
+# Raw data and large row-level outputs (fetch data separately)
+data/raw/
+data/*.sqlite3*
+reports/test_predictions.csv
+artifacts/notebook-run/

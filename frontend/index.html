@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Cloud AI · Network Monitor</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <aside>
+      <div class="brand">
+        <span class="brand-icon">◈</span>
+        <div>Cloud AI<small>Network Monitor</small></div>
+      </div>
+      <nav>
+        <button class="selected" data-view="overview">◫ &nbsp; Overview</button
+        ><button data-view="flows">⇄ &nbsp; Network flows</button
+        ><button data-view="alerts">◉ &nbsp; Flagged flows</button
+        ><button data-view="model">▥ &nbsp; Model performance</button
+        ><button data-view="dataset">▤ &nbsp; Dataset quality</button>
+      </nav>
+      <div class="aside-foot">
+        <span class="dot"></span> Local inference<br /><small
+          >UNSW-NB15 · CatBoost</small
+        >
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <div class="eyebrow">TRAFFIC INTELLIGENCE</div>
+          <h1 id="page-title">Network overview</h1>
+          <p>Classify flow features. Review suspicious traffic.</p>
+        </div>
+        <div class="actions">
+          <span class="badge">Benchmark mode</span
+          ><button id="replay" class="primary">▶ Replay sample</button
+          ><label class="button" for="upload">↑ Upload CSV</label
+          ><input type="file" id="upload" accept=".csv" hidden />
+        </div>
+      </header>
+      <div id="message" role="status">Loading trained model…</div>
+      <section id="overview" class="view">
+        <div class="cards">
+          <article>
+            <span>Analyzed flows</span><strong id="total">0</strong
+            ><small>Current batch</small>
+          </article>
+          <article>
+            <span>Flagged flows</span><strong id="flagged" class="red">0</strong
+            ><small id="rate">No batch selected</small>
+          </article>
+          <article>
+            <span>Unflagged flows</span><strong id="normal">0</strong
+            ><small>Below decision threshold</small>
+          </article>
+          <article>
+            <span>Model version</span
+            ><strong class="version" id="version">—</strong
+            ><small id="threshold">—</small>
+          </article>
+        </div>
+        <div class="chart-grid">
+          <article class="panel">
+            <div class="panel-head">
+              <h2>Flow review timeline</h2>
+              <small>Batch row order · not wall-clock time</small>
+            </div>
+            <div id="timeline" class="timeline">
+              <p>Replay or upload traffic to populate this chart.</p>
+            </div>
+            <div class="legend">
+              <span class="cyan">●</span> All flows
+              <span class="red">●</span> Flagged
+            </div>
+          </article>
+          <article class="panel">
+            <h2>Category suggestions</h2>
+            <p class="hint">Experimental classifier · flagged flows only</p>
+            <div id="categories" class="categories">No predictions yet.</div>
+          </article>
+        </div>
+        <article class="panel history">
+          <h2>Recent batches</h2>
+          <div id="history">No batches yet.</div>
+        </article>
+      </section>
+      <section id="model" class="view" hidden>
+        <article class="panel">
+          <h2>Held-out test results</h2>
+          <p class="hint">
+            Official test split. Model selection and flag threshold used
+            training/validation data only.
+          </p>
+          <div id="metrics" class="metric-grid"></div>
+          <h3>Experimental category classifier</h3>
+          <p class="hint" id="category-quality"></p>
+          <h3>Confusion matrix</h3>
+          <div id="confusion"></div>
+          <h3>Recall by attack category</h3>
+          <div id="attack-recall" class="categories"></div>
+          <p class="hint" id="audit"></p>
+          <p class="hint">
+            Benchmark performance does not establish live-network or zero-day
+            detection quality. Scores are uncalibrated model probabilities.
+            False-alarm rates can change on new networks.
+          </p>
+        </article>
+      </section>
+      <section id="dataset" class="view" hidden>
+        <article class="panel">
+          <h2>UNSW-NB15 dataset quality</h2>
+          <p>
+            Research traffic benchmark from 2015: hybrid normal activity and
+            synthetic attacks. We use the official predefined CSV partition,
+            with 42 input features.
+          </p>
+          <div id="dataset-metrics" class="metric-grid"></div>
+          <h3>Class support</h3>
+          <div id="dataset-classes" class="table-wrap"></div>
+          <h3>What the audit means</h3>
+          <p id="dataset-summary" class="hint"></p>
+          <p class="hint">
+            Exact feature matches with conflicting labels do not prove
+            annotation mistakes: selected features may omit distinguishing
+            context. Duplicate-aware development splits reduce one form of
+            leakage; they do not provide reliable session or temporal
+            separation.
+          </p>
+          <p class="hint">
+            Academic research use is permitted by the source authors; commercial
+            use requires agreement. See the
+            <a
+              href="https://research.unsw.edu.au/projects/unsw-nb15-dataset"
+              target="_blank"
+              rel="noopener"
+              >official source and usage terms</a
+            >.
+          </p>
+        </article>
+      </section>
+      <section id="explanation-panel" class="panel" hidden aria-live="polite">
+        <h2 id="explanation-title">Flow explanation</h2>
+        <p id="explanation-summary"></p>
+        <div id="explanation-features"></div>
+        <p id="explanation-reconstruction" class="hint"></p>
+        <p class="hint">
+          Positive contributions push the model toward attack; negative
+          contributions push toward normal. Contributions add in log-odds, not
+          probability. This explains model behavior, not causality or a
+          confirmed incident.
+        </p>
+      </section>
+      <section id="table-panel" class="panel">
+        <div class="panel-head">
+          <div>
+            <h2 id="table-title">Recent flow predictions</h2>
+            <small id="batch-description">No batch selected</small>
+          </div>
+          <a id="export" class="button" hidden>Download predictions</a>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Row</th>
+                <th>Protocol</th>
+                <th>Service</th>
+                <th>Category suggestion</th>
+                <th>Attack score</th>
+                <th>Decision</th>
+                <th>Actual label</th>
+                <th>Explanation</th>
+              </tr>
+            </thead>
+            <tbody id="rows">
+              <tr>
+                <td colspan="8">
+                  Replay a held-out sample or upload a CSV to begin.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pager">
+          <button id="previous">← Previous</button
+          ><span id="page-info">0 flows</span><button id="next">Next →</button>
+        </div>
+      </section>
+      <footer>
+        Flow-feature classification ·
+        <a href="/api/sample">Download sample CSV</a> ·
+        <a href="/docs">API documentation</a><br />Upload UNSW-compatible
+        feature records, up to 20,000 rows / 10 MiB. Labels are optional and
+        never used for predictions.
+      </footer>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

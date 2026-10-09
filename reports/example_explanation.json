@@ -1,0 +1,269 @@
+{
+  "model_version": "unsw-v1-86b48802",
+  "method": "CatBoost native TreeSHAP",
+  "contribution_units": "log-odds",
+  "attack_score": 0.8689379593175155,
+  "threshold": 0.6688201088619294,
+  "flagged": true,
+  "base_log_odds": 2.275404348921642,
+  "raw_log_odds": 1.8916009254388977,
+  "threshold_log_odds": 0.702853422891696,
+  "top_features": [
+    {
+      "feature": "sttl",
+      "value": 254.0,
+      "contribution": 1.6554238382730264,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "service",
+      "value": "-",
+      "contribution": -0.5343141558143731,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "proto",
+      "value": "tcp",
+      "contribution": -0.4651399676364089,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "swin",
+      "value": 255.0,
+      "contribution": -0.3535869734557483,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "sjit",
+      "value": 14143.3215,
+      "contribution": 0.3295160821835478,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "dmean",
+      "value": 44.0,
+      "contribution": 0.3262452867755543,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "ct_dst_src_ltm",
+      "value": 1.0,
+      "contribution": 0.3190187202209022,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "sbytes",
+      "value": 842.0,
+      "contribution": -0.2890048004710217,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "ct_dst_sport_ltm",
+      "value": 1.0,
+      "contribution": -0.28509525099827837,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "ct_srv_src",
+      "value": 1.0,
+      "contribution": 0.2556684598449638,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "dur",
+      "value": 2.020807,
+      "contribution": -0.2464166551846116,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "dbytes",
+      "value": 354.0,
+      "contribution": -0.2169213600226116,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "ct_state_ttl",
+      "value": 1.0,
+      "contribution": 0.2121542124685529,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "synack",
+      "value": 0.077776,
+      "contribution": -0.16408652493389272,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "dinpkt",
+      "value": 277.363156,
+      "contribution": -0.1619319254466072,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "djit",
+      "value": 402.60625,
+      "contribution": -0.13127198795260483,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "dpkts",
+      "value": 8.0,
+      "contribution": -0.13100962283301362,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "sloss",
+      "value": 2.0,
+      "contribution": -0.12316147304230766,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "ct_dst_ltm",
+      "value": 1.0,
+      "contribution": -0.11779162005666254,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "smean",
+      "value": 84.0,
+      "contribution": 0.10776118655524397,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "ct_src_dport_ltm",
+      "value": 1.0,
+      "contribution": -0.08817560352866953,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "ct_srv_dst",
+      "value": 2.0,
+      "contribution": -0.07625446395109646,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "ct_flw_http_mthd",
+      "value": 0.0,
+      "contribution": -0.07330897861995551,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "spkts",
+      "value": 10.0,
+      "contribution": -0.07308304243342552,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "sload",
+      "value": 3000.78125,
+      "contribution": 0.06988044879631403,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "tcprtt",
+      "value": 0.156175,
+      "contribution": -0.054816939912278366,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "trans_depth",
+      "value": 0.0,
+      "contribution": -0.05232570477409753,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "ct_src_ltm",
+      "value": 1.0,
+      "contribution": -0.032678824140555944,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "ackdat",
+      "value": 0.078399,
+      "contribution": 0.0323835564362105,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "dload",
+      "value": 1227.232422,
+      "contribution": -0.03175313585215374,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "state",
+      "value": "FIN",
+      "contribution": 0.019087126375696935,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "dtcpb",
+      "value": 3362912266.0,
+      "contribution": -0.01520228927471757,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "rate",
+      "value": 8.412481,
+      "contribution": -0.014092872029900656,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "dttl",
+      "value": 252.0,
+      "contribution": 0.012409301740553267,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "stcpb",
+      "value": 1316255462.0,
+      "contribution": 0.006912759421983415,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "dloss",
+      "value": 1.0,
+      "contribution": 0.0032610788089240316,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "is_ftp_login",
+      "value": 0.0,
+      "contribution": -0.0027842485825871543,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "sinpkt",
+      "value": 224.534111,
+      "contribution": 0.0008784201886219076,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "response_body_len",
+      "value": 0.0,
+      "contribution": -0.0003808291768255291,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "ct_ftp_cmd",
+      "value": 0.0,
+      "contribution": 0.00020903075819124245,
+      "direction": "toward attack"
+    },
+    {
+      "feature": "is_sm_ips_ports",
+      "value": 0.0,
+      "contribution": -2.3682206619946733e-05,
+      "direction": "toward normal"
+    },
+    {
+      "feature": "dwin",
+      "value": 255.0,
+      "contribution": 0.0,
+      "direction": "neutral"
+    }
+  ],
+  "other_contribution": -3.885780586188048e-16,
+  "reconstruction_error": 4.884981308350689e-15,
+  "sample_row_number": 9,
+  "actual_label": 0
+}

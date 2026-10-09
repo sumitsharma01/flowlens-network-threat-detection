@@ -1,20 +1,9 @@
-# Database Schema
+# Local review database
 
-## User
-- id (int, PK)
-- name (string)
-- email (string, unique)
+SQLite file `data/monitor.sqlite3`, overridable with `MONITOR_DB`.
 
-## NetworkFlow
-- id (int, PK)
-- src_ip (string)
-- dest_ip (string)
-- protocol (string)
-- timestamp (datetime)
+`batches`: id (UUID text primary key), created_at (UTC ISO text), source (text), summary (JSON text), results (JSON text), features (JSON text, nullable for legacy batches).
 
-## Prediction
-- id (int, PK)
-- flow_id (int, FK -> NetworkFlow.id)
-- user_id (int, FK -> User.id)
-- anomaly_score (float)
-- predicted_at (datetime)
+Each batch stores model version, decision threshold, total/flagged counts, row-order chart aggregates, and all per-flow predictions. Labels, if supplied, are retained for review only. Validated 42-feature vectors are persisted for per-flow explanations; original uploaded CSV files are not retained. Legacy batches without features require replay/upload again. Pagination filters stored prediction records; export includes the complete batch.
+
+This is an MVP schema for one local reviewer, not a multi-tenant production incident database.

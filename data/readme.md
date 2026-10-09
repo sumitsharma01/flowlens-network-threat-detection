@@ -1,7 +1,7 @@
 # Dataset Features (UNSW-NB15 Training Set)
 Available at : https://unsw-my.sharepoint.com/personal/z5025758_ad_unsw_edu_au/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fz5025758%5Fad%5Funsw%5Fedu%5Fau%2FDocuments%2FUNSW%2DNB15%20dataset%2FCSV%20Files%2FTraining%20and%20Testing%20Sets&ga=1
 
-The training dataset contains 49 features + 1 label column. Below is a description of the most important columns:
+The selected train/test CSVs contain 45 columns: 42 input features plus `id`, `attack_cat`, and `label`. The raw dataset has a different schema. Below is a description of the most important columns:
 
 | **Column**               | **Description**                                                                 |
 |--------------------------|---------------------------------------------------------------------------------|
@@ -39,3 +39,7 @@ The training dataset contains 49 features + 1 label column. Below is a descripti
 | is_sm_ips_ports          | Binary flag for same source & destination IP and port.                          |
 | attack_cat               | Attack category (e.g., DoS, Exploits, Fuzzers, Reconnaissance).                 |
 | label                    | Binary class label → 0 = Normal, 1 = Attack.                                    |
+
+
+## Reproducible download
+Run `python scripts/download_data.py` from the repository root. This obtains the complete predefined train/test CSVs from a revision-pinned public mirror with expected SHA-256 checksums. Source and attribution: https://research.unsw.edu.au/projects/unsw-nb15-dataset. See `data/raw/manifest.json` after download.

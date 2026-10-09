@@ -1,3 +1,5 @@
+> Original future architecture proposal. For the implemented local classifier and dashboard, see [ARCHITECTURE.md](../ARCHITECTURE.md). Kafka and separately deployed microservices are not part of this MVP.
+
 # Microservices & Communication Design
 
 ## 1. Microservices

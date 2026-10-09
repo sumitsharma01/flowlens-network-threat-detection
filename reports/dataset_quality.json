@@ -1,0 +1,88 @@
+{
+  "dataset": "UNSW-NB15",
+  "source": "https://research.unsw.edu.au/projects/unsw-nb15-dataset",
+  "input_features": 42,
+  "categorical_features": [
+    "proto",
+    "service",
+    "state"
+  ],
+  "feature_definition": "All 42 prepared feature values; excludes id, label and attack_cat",
+  "files": {
+    "UNSW_NB15_training-set.csv": {
+      "url": "https://huggingface.co/datasets/Mouwiya/UNSW-NB15-small/resolve/6f5f54594dfc80c84264aec4c7cc3d9b162f1e2f/UNSW_NB15_training-set.csv",
+      "rows": 175341,
+      "sha256": "bec7dd5ec88dc2a0ccc7a07879d338395ed7421750f675fd0339e07dfe0648fa"
+    },
+    "UNSW_NB15_testing-set.csv": {
+      "url": "https://huggingface.co/datasets/Mouwiya/UNSW-NB15-small/resolve/6f5f54594dfc80c84264aec4c7cc3d9b162f1e2f/UNSW_NB15_testing-set.csv",
+      "rows": 82332,
+      "sha256": "734fe6642edf758f7c94d7d9149426b49d202fe8e7bf0bef47392489c3c0a559"
+    }
+  },
+  "splits": {
+    "training": {
+      "rows": 175341,
+      "columns": 45,
+      "feature_missing_values": 0,
+      "numeric_nonfinite_values": 0,
+      "numeric_negative_values": 0,
+      "binary_category_label_disagreements": 0,
+      "duplicate_feature_rows": 74301,
+      "duplicate_fraction": 0.4237514329221346,
+      "unique_feature_groups": 101040,
+      "conflicting_binary_label_groups": 229,
+      "rows_in_conflicting_binary_groups": 940,
+      "attack_fraction": 0.6806223302022916,
+      "class_counts": {
+        "Normal": 56000,
+        "Generic": 40000,
+        "Exploits": 33393,
+        "Fuzzers": 18184,
+        "DoS": 12264,
+        "Reconnaissance": 10491,
+        "Analysis": 2000,
+        "Backdoor": 1746,
+        "Shellcode": 1133,
+        "Worms": 130
+      }
+    },
+    "testing": {
+      "rows": 82332,
+      "columns": 45,
+      "feature_missing_values": 0,
+      "numeric_nonfinite_values": 0,
+      "numeric_negative_values": 0,
+      "binary_category_label_disagreements": 0,
+      "duplicate_feature_rows": 28386,
+      "duplicate_fraction": 0.34477481416703104,
+      "unique_feature_groups": 53946,
+      "conflicting_binary_label_groups": 6,
+      "rows_in_conflicting_binary_groups": 14,
+      "attack_fraction": 0.5506000097167566,
+      "class_counts": {
+        "Normal": 37000,
+        "Generic": 18871,
+        "Exploits": 11132,
+        "Fuzzers": 6062,
+        "DoS": 4089,
+        "Reconnaissance": 3496,
+        "Analysis": 677,
+        "Backdoor": 583,
+        "Shellcode": 378,
+        "Worms": 44
+      }
+    }
+  },
+  "test_rows_matching_training": 8541,
+  "test_match_fraction": 0.10373852208132925,
+  "unseen_test_categories": {
+    "proto": [],
+    "service": [],
+    "state": [
+      "ACC",
+      "CLO"
+    ]
+  },
+  "quality_assessment": "Useful research benchmark; duplicate overlap, conflicting feature labels, rare classes and distribution differences limit operational claims."
+}

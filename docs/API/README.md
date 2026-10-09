@@ -1,79 +1,24 @@
-# API Design for Anomaly Detection System
+# Implemented API
 
-This document describes the planned REST API endpoints for the Anomaly Detection system.  
-It serves as a low-level design specification before implementation.
+Run the server and open `/docs` for the generated OpenAPI specification.
 
----
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/health` | Loaded model health |
+| GET | `/api/model-info` | Feature schema, threshold, version |
+| GET | `/api/metrics` | Held-out evaluation report |
+| POST | `/api/predict` | JSON `{"flows": [{...42 feature fields...}]}`; no persistence |
+| POST | `/api/upload` | Multipart CSV field `file`; creates a review batch |
+| POST | `/api/replay` | Score 300 real held-out sample records |
+| GET | `/api/batches` | Latest 30 batch summaries |
+| GET | `/api/batches/{id}` | Paginated flow results: offset, limit (1–500), flagged_only |
+| GET | `/api/batches/{id}/export` | Export every prediction from a batch |
+| POST | `/api/explain` | Explain up to 100 JSON flows using native TreeSHAP |
+| GET | `/api/batches/{id}/flows/{row_number}/explain` | Explain a stored flow; 409 for missing features or stale model |
+| GET | `/api/dataset-quality` | Measured quality audit of the pinned dataset |
+| GET | `/api/sample` | Feature-only example CSV |
 
-## Base URL
-http://localhost:8000/api
+Invalid CSV/features produce 422; large uploads produce 413; absent batches produce 404.
+`attack_score` is an uncalibrated model probability. `flagged` compares it with the stored validation-selected threshold. `category_suggestion` comes from a separate multiclass model and can disagree. All API responses use the stored model version; there is no runtime threshold override.
 
-*(This will change when deployed)*
-
----
-
-## Endpoints
-
-### 1. Predict Anomaly
-**Description:**  
-Submit a network flow or feature data to get anomaly predictions from the trained model.
-
-| Method | URL             | Auth Required | Description                  |
-|--------|-----------------|---------------|------------------------------|
-| POST   | /predict        | No            | Get anomaly prediction       |
-
-**Request Body (JSON):**
-```json
-{
-  "feature1": "value1",
-  "feature2": "value2",
-  "feature3": "value3",
-  "...": "..."
-}
-```
-
-**Response (JSON):**
-```json
-{
-  "prediction": "anomaly",
-  "confidence_score": 0.92
-}
-```
-
-**Error Responses:**
-- 400 Bad Request – Invalid input data
-- 500 Internal Server Error – Server error or model not loaded
-
-### 2. Get Model Info
-**Description:**  
-Retrieve metadata about the deployed model (version, features, training info).
-
-| Method | URL          | Auth Required | Description            |
-|--------|--------------|---------------|------------------------|
-| GET    | /model-info  | No            | Get model metadata     |
-
-**Response (JSON):**
-```json
-{
-  "model_name": "AnomalyDetectionModel",
-  "version": "1.0.0",
-  "features": ["feature1", "feature2", "feature3", "..."],
-  "training_dataset": "UNSW-NB15"
-}
-```
-
-**Error Responses:**
-- 500 Internal Server Error – Server error or model metadata unavailable
-
-### Future Endpoints
-- `/retrain` – Endpoint to retrain the model with new data
-- `/metrics` – Endpoint to fetch performance metrics or logs
-- `/dashboard-data` – Endpoint to provide summarized data for frontend
-
-## Notes
-- All requests and responses will use JSON format.
-- Error handling should follow standard HTTP codes.
-- Authentication may be added in future iterations (e.g., API keys, JWT).
-- This API is designed to work with a microservices architecture.
-
-**Document last updated:** 2025-08-13
+Local use only; authentication is not implemented.
